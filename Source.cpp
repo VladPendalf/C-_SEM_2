@@ -5,9 +5,9 @@
 using namespace std;
 
 
-//-------------------------ТЗ-------------------------------------------|
-//Класс Дробь - Сложение с целым числом , вычитание целого числа (1.1)  |
-//Класс Наследник от Дробь - Сложение целого числа и дроби (1.2)		|
+//-------------------------РўР—-------------------------------------------|
+//РљР»Р°СЃСЃ Р”СЂРѕР±СЊ - РЎР»РѕР¶РµРЅРёРµ СЃ С†РµР»С‹Рј С‡РёСЃР»РѕРј , РІС‹С‡РёС‚Р°РЅРёРµ С†РµР»РѕРіРѕ С‡РёСЃР»Р° (1.1)  |
+//РљР»Р°СЃСЃ РќР°СЃР»РµРґРЅРёРє РѕС‚ Р”СЂРѕР±СЊ - РЎР»РѕР¶РµРЅРёРµ С†РµР»РѕРіРѕ С‡РёСЃР»Р° Рё РґСЂРѕР±Рё (1.2)		|
 //----------------------------------------------------------------------|
 
 
@@ -16,34 +16,34 @@ using namespace std;
 class Fraction
 {
 protected:
-	int denominator; //знаменатель
-	int numerator; //числитель
+	int denominator; //Р·РЅР°РјРµРЅР°С‚РµР»СЊ
+	int numerator; //С‡РёСЃР»РёС‚РµР»СЊ
 public:
-	//Конструкторы
-	Fraction() :numerator(1), denominator(1) {  }; //по умолчанию
+	//РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂС‹
+	Fraction() :numerator(1), denominator(1) {  }; //РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ
 
-	Fraction(const Fraction& fraction) :numerator(fraction.numerator), denominator(fraction.denominator) {  }; //копирования
+	Fraction(const Fraction& fraction) :numerator(fraction.numerator), denominator(fraction.denominator) {  }; //РєРѕРїРёСЂРѕРІР°РЅРёСЏ
 
-	Fraction(const int& val_1,const int& val_2) :numerator(val_1), denominator(val_2) {  };//обычный
+	Fraction(const int& val_1,const int& val_2) :numerator(val_1), denominator(val_2) {  };//РѕР±С‹С‡РЅС‹Р№
 
-	~Fraction() {  }//деструктор
+	~Fraction() {  }//РґРµСЃС‚СЂСѓРєС‚РѕСЂ
 
-	//Функционал
-	void show(); //вывод дроби
+	//Р¤СѓРЅРєС†РёРѕРЅР°Р»
+	void show(); //РІС‹РІРѕРґ РґСЂРѕР±Рё
 	
-	int get_den(); //геттер
+	int get_den(); //РіРµС‚С‚РµСЂ
 	
-	int get_num();//геттер
+	int get_num();//РіРµС‚С‚РµСЂ
 
-	void set_num(const int& num); //сеттер
+	void set_num(const int& num); //СЃРµС‚С‚РµСЂ
 
-	void set_den(const int& num); //сеттер
+	void set_den(const int& num); //СЃРµС‚С‚РµСЂ
 
 	Fraction operator=(const Fraction& val);
 
-	Fraction operator+(const int& num);//сложение с целым числом
+	Fraction operator+(const int& num);//СЃР»РѕР¶РµРЅРёРµ СЃ С†РµР»С‹Рј С‡РёСЃР»РѕРј
 
-	Fraction operator-(const int& num);//сложение с целым числом
+	Fraction operator-(const int& num);//СЃР»РѕР¶РµРЅРёРµ СЃ С†РµР»С‹Рј С‡РёСЃР»РѕРј
 };
 
 Fraction Fraction::operator=(const Fraction& val)
@@ -57,7 +57,7 @@ Fraction Fraction::operator=(const Fraction& val)
 	denominator = val.denominator;
 }
 
-class Fraction_v2 : public Fraction //наследник
+class Fraction_v2 : public Fraction //РЅР°СЃР»РµРґРЅРёРє
 {
 public:
 		Fraction_v2(const int& val_1, const int& val_2)
@@ -129,16 +129,16 @@ void Fraction::set_num(const int& num)
 	numerator = num;
 }
 
-void Fraction::show() //вывод дроби
+void Fraction::show() //РІС‹РІРѕРґ РґСЂРѕР±Рё
 {
 
 	if (denominator == 1)
 	{
-		cout << "Числитель = " << numerator << endl;
+		cout << "Р§РёСЃР»РёС‚РµР»СЊ = " << numerator << endl;
 	}
 	else
 	{
-		cout << "Числитель = " << numerator << "\nЗнаменатель = " << denominator << endl;
+		cout << "Р§РёСЃР»РёС‚РµР»СЊ = " << numerator << "\nР—РЅР°РјРµРЅР°С‚РµР»СЊ = " << denominator << endl;
 	}
 }
 
@@ -152,14 +152,14 @@ int Fraction::get_den()
 	return denominator;
 }
 
-Fraction Fraction::operator+(const int& num) ////сложение с целым числом
+Fraction Fraction::operator+(const int& num) ////СЃР»РѕР¶РµРЅРёРµ СЃ С†РµР»С‹Рј С‡РёСЃР»РѕРј
 {
 	this->denominator = denominator;
 	numerator = numerator + num * denominator;
 }
 
 
-Fraction Fraction::operator-(const int& num) //вычетание целого числа
+Fraction Fraction::operator-(const int& num) //РІС‹С‡РµС‚Р°РЅРёРµ С†РµР»РѕРіРѕ С‡РёСЃР»Р°
 {
 	Fraction temp;
 	temp.denominator = denominator;
@@ -171,21 +171,21 @@ int main()
 {
 	setlocale(LC_ALL, "Ru-ru");
 
-	cout << "Функционал Fraction and Fraction_v2" << endl;
+	cout << "Р¤СѓРЅРєС†РёРѕРЅР°Р» Fraction and Fraction_v2" << endl;
 
 	Fraction test = { 1,3 };
-	cout << "Значения дроби введены автоматически = " ; test.show();
+	cout << "Р—РЅР°С‡РµРЅРёСЏ РґСЂРѕР±Рё РІРІРµРґРµРЅС‹ Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРё = " ; test.show();
 	Fraction_v2 Test = test;
-	cout << "Fraction_v2 - наследник класса Fraction ; " << endl << " Можно объявлять объект типа Fraction_v2 , можно копировать значения Fraction в Fraction_v2 " << endl;
+	cout << "Fraction_v2 - РЅР°СЃР»РµРґРЅРёРє РєР»Р°СЃСЃР° Fraction ; " << endl << " РњРѕР¶РЅРѕ РѕР±СЉСЏРІР»СЏС‚СЊ РѕР±СЉРµРєС‚ С‚РёРїР° Fraction_v2 , РјРѕР¶РЅРѕ РєРѕРїРёСЂРѕРІР°С‚СЊ Р·РЅР°С‡РµРЅРёСЏ Fraction РІ Fraction_v2 " << endl;
 	Test = 5 + test;
 
-	cout << "Есть прибавление числа к Fraction и Fraction к числу" << endl;
+	cout << "Р•СЃС‚СЊ РїСЂРёР±Р°РІР»РµРЅРёРµ С‡РёСЃР»Р° Рє Fraction Рё Fraction Рє С‡РёСЃР»Сѓ" << endl;
 	Test.show();
 
-	cout << "Вычитание из Fraction " << endl;
+	cout << "Р’С‹С‡РёС‚Р°РЅРёРµ РёР· Fraction " << endl;
 	test = test - 5;
 	Test = Test - 5;
-	cout << "Для вывода значений использовать метод show();" << endl;
+	cout << "Р”Р»СЏ РІС‹РІРѕРґР° Р·РЅР°С‡РµРЅРёР№ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РјРµС‚РѕРґ show();" << endl;
 	Test.show();
 	return 0;
 }

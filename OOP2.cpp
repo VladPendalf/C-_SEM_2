@@ -500,5 +500,15 @@ int main()
 
 	es_num.print();
 	test.print();
+
+        MySortedArray sort_arr, es_sort_arr;
+        for (int i = 0, i < 6; ++i)
+        { 
+             sort_arr.ptr[i] = i;
+        }
+        sort_arr.print();
+        es_sort_arr = sort_arr.es_num();
+        es_sort_arr.print();
+
 	return 0;
 }

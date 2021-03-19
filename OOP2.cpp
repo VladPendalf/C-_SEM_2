@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 
 using namespace std;
 
@@ -23,7 +24,7 @@ B. В классе MyArrayChild, унаследованном от класса 
 	1 Удаления элемента из произвольного места в массиве RemoveAt().
 	2 Поиска элемента в массиве по значению IndexOf().
 	3 Вставки элемента в некоторое место в массиве InsertAt().
-	4 Добавьте функцию согласно Вашему варианту (см. таблицу 1). Результатом обработки массива должен 
+	4 Добавьте функцию согласно Вашему варианту (см. таблицу 1). Результатом обработки массива должен
 	быть новый объект класса. Исходный массив не должен меняться.
 
 C. Унаследуйте новый класс MySortedArray от MyArrayChild. Мы предполагаем, что этот
@@ -41,28 +42,28 @@ B.4 Во входном массиве – целые числа. Помести
 class MyArrayParent
 {
 protected:
-	
+
 	int capacity; //сколько памяти выделено 
-	
+
 	int count; //количество элементов - сколько памяти используем
-	
+
 	double* ptr;//массив
 
 public:
 
-//----------------------------КОНСТРУКТОРЫ_И_ДЕСТРУКТОРЫ---------------------------------+							 
+	//----------------------------КОНСТРУКТОРЫ_И_ДЕСТРУКТОРЫ---------------------------------+							 
 	MyArrayParent(int Dimension);	//конструктор по умолчанию (но это не точно... :D )				 
-																						 
+
 	MyArrayParent(double* arr, int len); //конструктор принимает существующий массив	 
 
 	MyArrayParent(const MyArrayParent& V); //конструктор копирования
-																						 
-	~MyArrayParent();																	 
-//---------------------------------------------------------------------------------------+
 
-	//обращение к полям
+	~MyArrayParent();
+	//---------------------------------------------------------------------------------------+
+
+		//обращение к полям
 	int Capacity() { return capacity; } //размер общей памяти
-	
+
 	int Size() { return count; } //число элементов
 
 	double GetComponent(int index); //вывод числа по индексу
@@ -84,11 +85,11 @@ public:
 class MyArrayChild : public MyArrayParent
 {
 public:
-	 
+
 	MyArrayChild(int Dimension = 10) : MyArrayParent(Dimension) { cout << "\nMyArrayChild constructor with Dimension"; } //используем конструктор родителя
 
 	~MyArrayChild();
-	
+
 	void RemoveAt(int index);//удаление элемента
 
 	virtual int IndexOf(double value);//поиск элемента
@@ -106,7 +107,7 @@ protected:
 	int IndexOf_1(double value);// бинарный поиск
 
 public:
-	MySortedArray(int Dimension = 10) : MyArrayChild(Dimension) {cout << "\nMySortedArray constructor\n";}
+	MySortedArray(int Dimension = 10) : MyArrayChild(Dimension) { cout << "\nMySortedArray constructor\n"; }
 
 	// using MyArrayChild::MyArrayChild -> что действительно делает и как это выглядит?
 
@@ -120,7 +121,6 @@ public:
 };
 
 
-
 MyArrayParent::MyArrayParent(int Dimension = 10)
 {
 	cout << "\nMyArrayParent constructor with Dimension";
@@ -132,10 +132,11 @@ MyArrayParent::MyArrayParent(int Dimension = 10)
 MyArrayParent::MyArrayParent(double* arr, int len) //конструктор принимает существующий массив
 {
 	cout << "\nMyArrayParent constructor with array" << endl;
-	
+
 	capacity = len + 5;
 	ptr = new double[capacity]; //делаем массив с запасом
 	count = len;
+
 
 	for (int i = 0; i < len; ++i)
 	{
@@ -154,7 +155,7 @@ MyArrayParent::MyArrayParent(const MyArrayParent& V)
 	count = V.count;
 
 	ptr = new double[V.capacity];
-	for (int i = 0; i < V.count; i++)
+	for (int i = 0; i < V.count; ++i)
 		ptr[i] = V.ptr[i];
 
 	print();
@@ -192,101 +193,38 @@ MySortedArray::~MySortedArray()
 
 double MyArrayParent::GetComponent(int index)
 {
-	/*if (index >= 0 && index < count) { return ptr[index]; }
-	return -1;
-	*/
-
-	try
-	{
-		if (index >= 0 && index < count)
-		{
-			return ptr[index];
-		}
-		else
-		{
-			throw "\nВы используете несуществующий индекс\n";
-			throw -1;
-		}
-	}
-	catch (const char* exeption)
-	{
-		cerr << "Error: " << exeption << endl;
-	}
-	catch (int)
-	{
-		return -1;
-	}
+	if (index >= 0 && index < count) { return ptr[index]; }
+	else return -1;
 }
 
 void MyArrayParent::SetComponent(int index, double value) //добавить throw()
 {
-	/*if (index >= 0 && index < count)
+	if (index >= 0 && index < count)
 		ptr[index] = value;
-	//сгенерировать исключение, если индекс неправильный
-	*/
-
-	try
-	{
-		if (index >= 0 && index < count)
-		{
-			ptr[index] = value;
-		}
-		else
-		{
-			throw "\nВы используете несуществующий индекс\n";
-		}
-	}
-	catch(const char* exeption)
-	{
-		cerr << "Error: " << exeption;
-	}
-
+	else
+		cout << "Error\n";
 
 }
 
 void MyArrayParent::push(double value)
 {
-	/*if (capacity > count)
+	if (capacity > count)
 	{
 		ptr[count] = value;
 		count += 1;
 	}
 	else
-		cout << ("No any space left!") << endl;
-
-	*/
-	try
-	{
-		if (capacity > count)
-		{
-			ptr[count] = value;
-			count += 1;
-		}
-		else
-		{
-			throw "\nПамять массива переполнена!!!\n";
-		}
-	}
-	catch(const char* exeption)
-	{
-		cerr << "Error: " << exeption;
-	}
-
+		cout << "No any space left!" << endl;
 }
 
 void MyArrayParent::RemoveLastValue()
 {
 	if (count > 0)
 		count -= 1;
-	//что делаем, если пуст? - ничего
 }
 
 double& MyArrayParent::operator[](int index)
 {
-	//перегрузка оператора []
-		// cout<<arr[2]; считывание
-		// arr[2] = 1; - запись
-		// если не писать ссылку, то будет менятся ссылка, а не оригинал
 	if (index < 0)
 		return ptr[count + index];
 	if (count > index)
@@ -295,27 +233,32 @@ double& MyArrayParent::operator[](int index)
 
 MyArrayParent& MyArrayParent::operator=(const MyArrayParent& V)
 {
-	//оператор =
-	//arr1 = arr2 = arr3; где arr_i - объекты нашего класса
-	capacity = V.capacity;
-	count = V.count;
+	if (this != &V)
+	{
+		capacity = V.capacity;
+		count = V.count;
+		delete[] ptr;
 
-	ptr = new double[V.capacity];
-	for (int i = 0; i < V.count; i++)
-		ptr[i] = V.ptr[i];
-	return *this; //указатель сам на себя 
-	// отличие от копирования - нужно вернуть this
+		ptr = new double[V.capacity];
+		for (int i = 0; i < V.count; ++i)
+			ptr[i] = V.ptr[i];
+		// отличие от копирования - нужно вернуть this
+	}
+	else
+	{
+		return *this; //указатель сам на себя 
+	}
 }
 
 void MyArrayParent::print()
 {
 	cout << "\nMyArrParent, size = " << count << "\n values: { ";
 
-	for (int i = 0; i < (count-1); ++i)
+	for (int i = 0; i < (count - 1); ++i)
 	{
-		cout << ptr[i] <<" , ";
+		cout << ptr[i] << " , ";
 	}
-	cout << ptr[count-1] << " }\n";
+	cout << ptr[count - 1] << " }\n";
 }
 
 void MyArrayChild::RemoveAt(int index)
@@ -345,7 +288,7 @@ int MyArrayChild::IndexOf(double value)
 	for (int i = 0; i < count; i++)
 		if (ptr[i] == value)
 			return i;
-		return -1;
+	return -1;
 }
 
 void MyArrayChild::InsertAt(double value, int index)
@@ -368,32 +311,39 @@ MyArrayChild MyArrayChild::Easyl_num()
 	arr_es_num.count = count;
 	arr_es_num.capacity = capacity;
 
-	for (int i = 0; i < count; ++i) //проверяем на простоту
+	for (int i = 0, j = 0; i < count; ++i) //проверяем на простоту
 	{
 		if (simple(ptr[i]) == true)
 		{
-			arr_es_num.ptr[i] = ptr[i];
+			arr_es_num.ptr[j] = ptr[i];
+			++j;
 		}
 		else
 		{
 			arr_es_num.count--;
 		}
 	}
-	arr_es_num.count--;
 	return arr_es_num;
 }
 
 MyArrayChild& MyArrayChild::operator=(const MyArrayChild& str)
 {
-	count = str.count;
-	capacity = str.capacity;
-
-	for (int i = 0; i < count; ++i)
+	if (this != &str)
 	{
-		ptr[i] = str.ptr[i];
-	}
+		count = str.count;
+		capacity = str.capacity;
+		delete[] ptr;
 
-	return *this;
+		ptr = new double[capacity];
+		for (int i = 0; i < count; ++i)
+		{
+			ptr[i] = str.ptr[i];
+		}
+	}
+	else
+	{
+		return *this;
+	}
 }
 
 void MySortedArray::push(double value)
@@ -455,24 +405,24 @@ MySortedArray MySortedArray::Easyl_num()
 	arr_es_num.count = count;
 	arr_es_num.capacity = capacity;
 
-	for (int i = 0; i < count; ++i) //проверяем на простоту
+	for (int i = 0,j = 0; i < count; ++i) //проверяем на простоту
 	{
 		if (simple(ptr[i]) == true)
 		{
-			arr_es_num.ptr[i] = ptr[i];
+			arr_es_num.ptr[j] = ptr[i];
+			++j;
 		}
 		else
 		{
 			arr_es_num.count--;
 		}
 	}
-	arr_es_num.count--;
 	return arr_es_num;
 }
 
 int main()
 {
-	setlocale(LC_ALL,"Ru-ru");
+	setlocale(LC_ALL, "Ru-ru");
 
 	MyArrayParent arr;
 
@@ -481,7 +431,7 @@ int main()
 		arr.push(i);
 	}
 	arr.print();
-	
+
 	MyArrayChild test, es_num;
 	for (int i = 0; i < 6; ++i)
 	{
@@ -500,15 +450,5 @@ int main()
 
 	es_num.print();
 	test.print();
-
-        MySortedArray sort_arr, es_sort_arr;
-        for (int i = 0, i < 6; ++i)
-        { 
-             sort_arr.ptr[i] = i;
-        }
-        sort_arr.print();
-        es_sort_arr = sort_arr.es_num();
-        es_sort_arr.print();
-
 	return 0;
 }

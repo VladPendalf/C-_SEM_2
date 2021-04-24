@@ -6,26 +6,26 @@ using namespace std;
 class BaseString
 {
 protected:
-	char* p = nullptr; //указатель 
-	int len = 0; //число символов
-	int capacity = 256; //макс размер
+	char* p = nullptr; //ГіГЄГ Г§Г ГІГҐГ«Гј 
+	int len = 0; //Г·ГЁГ±Г«Г® Г±ГЁГ¬ГўГ®Г«Г®Гў
+	int capacity = 256; //Г¬Г ГЄГ± Г°Г Г§Г¬ГҐГ°
 public:
-	BaseString(char* ptr) //Kонструктор
+	BaseString(char* ptr) //KГ®Г­Г±ГІГ°ГіГЄГІГ®Г°
 	{
 
 		p = new char[capacity];
 		
 		p[len] = '\0';
 		
-		if (ptr != nullptr) //проверка на ненулевую строку
+		if (ptr != nullptr) //ГЇГ°Г®ГўГҐГ°ГЄГ  Г­Г  Г­ГҐГ­ГіГ«ГҐГўГіГѕ Г±ГІГ°Г®ГЄГі
 		{
-			while (ptr[len] != '\0' && len < (capacity - 1)) //копируем данные в новый массив
+			while (ptr[len] != '\0' && len < (capacity - 1)) //ГЄГ®ГЇГЁГ°ГіГҐГ¬ Г¤Г Г­Г­Г»ГҐ Гў Г­Г®ГўГ»Г© Г¬Г Г±Г±ГЁГў
 			{
 				p[len] = ptr[len];
 				++len;
 			}
 
-			p[len] = '\0'; //отделяем 
+			p[len] = '\0'; //Г®ГІГ¤ГҐГ«ГїГҐГ¬ 
 			
 		}
 	}
@@ -65,7 +65,7 @@ public:
 		
 	}
 
-	~BaseString() //деструктор
+	~BaseString() //Г¤ГҐГ±ГІГ°ГіГЄГІГ®Г°
 	{
 		
 		if (p != nullptr)
@@ -76,18 +76,18 @@ public:
 		len = 0;
 	}
 	
-	int Length() { return len; } //число букв
+	int Length() { return len; } //Г·ГЁГ±Г«Г® ГЎГіГЄГў
 	
-	int Capacity() { return capacity; } //макс размер
+	int Capacity() { return capacity; } //Г¬Г ГЄГ± Г°Г Г§Г¬ГҐГ°
 	
-	char* get() {return p;} //указатель на первый элемент
+	char* get() {return p;} //ГіГЄГ Г§Г ГІГҐГ«Гј Г­Г  ГЇГҐГ°ГўГ»Г© ГЅГ«ГҐГ¬ГҐГ­ГІ
 
-	char& operator[](int& i) //перегрузка оператора, для вывода символа по его индексу 
+	char& operator[](int& i) //ГЇГҐГ°ГҐГЈГ°ГіГ§ГЄГ  Г®ГЇГҐГ°Г ГІГ®Г°Г , Г¤Г«Гї ГўГ»ГўГ®Г¤Г  Г±ГЁГ¬ГўГ®Г«Г  ГЇГ® ГҐГЈГ® ГЁГ­Г¤ГҐГЄГ±Гі 
 	{ 
 		return p[i];
 	} 
 	
-	BaseString& operator=(BaseString& s) //перегрузка оператора =
+	BaseString& operator=(BaseString& s) //ГЇГҐГ°ГҐГЈГ°ГіГ§ГЄГ  Г®ГЇГҐГ°Г ГІГ®Г°Г  =
 	{
 		
 		if (this != &s)
@@ -118,7 +118,7 @@ public:
 		}
 	}
 	
-	BaseString(BaseString& s)//конструктор копирования 
+	BaseString(BaseString& s)//ГЄГ®Г­Г±ГІГ°ГіГЄГІГ®Г° ГЄГ®ГЇГЁГ°Г®ГўГ Г­ГЁГї 
 	{
 		
 			len = s.Length();
@@ -139,7 +139,7 @@ public:
 			p[len] = '\0';
 	}
 	
-	virtual void print() //виртуальная функция вывода
+	virtual void print() //ГўГЁГ°ГІГіГ Г«ГјГ­Г Гї ГґГіГ­ГЄГ¶ГЁГї ГўГ»ГўГ®Г¤Г 
 	{
 		int i = 0;
 
@@ -158,11 +158,11 @@ class String : public BaseString
 {
 public:
 
-	using BaseString::BaseString; //с++ 11 - это 1000 и 1 отсутствующий конструктор :)
+	using BaseString::BaseString; //Г±++ 11 - ГЅГІГ® 1000 ГЁ 1 Г®ГІГ±ГіГІГ±ГІГўГіГѕГ№ГЁГ© ГЄГ®Г­Г±ГІГ°ГіГЄГІГ®Г° :)
 
 	String& operator+(String& s)
 	{
-		int s_len = this->len + s.Length() - 1; //длина двух строк + 1 место под '\0'
+		int s_len = this->len + s.Length() - 1; //Г¤Г«ГЁГ­Г  Г¤ГўГіГµ Г±ГІГ°Г®ГЄ + 1 Г¬ГҐГ±ГІГ® ГЇГ®Г¤ '\0'
 		cout << "len = " << len;
 		cout << "\t S_len = " << s_len << endl;
 
@@ -205,7 +205,7 @@ public:
 
 		if (fl && j == str.Length())
 		{
-			cout << "Индекс подстроки = ";
+			cout << "Г€Г­Г¤ГҐГЄГ± ГЇГ®Г¤Г±ГІГ°Г®ГЄГЁ = ";
 			return index;
 		}
 		else
@@ -217,7 +217,7 @@ public:
 };
 
 
-int _tmain(int argc, _TCHAR* argv[]) //без #include <tchar.h> работать не будет... 
+int _tmain(int argc, _TCHAR* argv[]) //ГЎГҐГ§ #include <tchar.h> Г°Г ГЎГ®ГІГ ГІГј Г­ГҐ ГЎГіГ¤ГҐГІ... 
 {
 	setlocale(LC_ALL, "Ru-ru");
 

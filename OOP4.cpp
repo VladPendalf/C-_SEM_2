@@ -6,26 +6,26 @@ using namespace std;
 class BaseString
 {
 protected:
-	char* p = nullptr; //óêàçàòåëü 
-	int len = 0; //÷èñëî ñèìâîëîâ
-	int capacity = 256; //ìàêñ ðàçìåð
+	char* p = nullptr; //указатель 
+	int len = 0; //число символов
+	int capacity = 256; //макс размер
 public:
-	BaseString(char* ptr) //Kîíñòðóêòîð
+	BaseString(char* ptr) //Kонструктор
 	{
 
 		p = new char[capacity];
 		
 		p[len] = '\0';
 		
-		if (ptr != nullptr) //ïðîâåðêà íà íåíóëåâóþ ñòðîêó
+		if (ptr != nullptr) //проверка на ненулевую строку
 		{
-			while (ptr[len] != '\0' && len < (capacity - 1)) //êîïèðóåì äàííûå â íîâûé ìàññèâ
+			while (ptr[len] != '\0' && len < (capacity - 1)) //копируем данные в новый массив
 			{
 				p[len] = ptr[len];
 				++len;
 			}
 
-			p[len] = '\0'; //îòäåëÿåì 
+			p[len] = '\0'; //отделяем 
 			
 		}
 	}
@@ -65,7 +65,7 @@ public:
 		
 	}
 
-	~BaseString() //äåñòðóêòîð
+	~BaseString() //деструктор
 	{
 		
 		if (p != nullptr)
@@ -76,18 +76,18 @@ public:
 		len = 0;
 	}
 	
-	int Length() { return len; } //÷èñëî áóêâ
+	int Length() { return len; } //число букв
 	
-	int Capacity() { return capacity; } //ìàêñ ðàçìåð
+	int Capacity() { return capacity; } //макс размер
 	
-	char* get() {return p;} //óêàçàòåëü íà ïåðâûé ýëåìåíò
+	char* get() {return p;} //указатель на первый элемент
 
-	char& operator[](int& i) //ïåðåãðóçêà îïåðàòîðà, äëÿ âûâîäà ñèìâîëà ïî åãî èíäåêñó 
+	char& operator[](int& i) //перегрузка оператора, для вывода символа по его индексу 
 	{ 
 		return p[i];
 	} 
 	
-	BaseString& operator=(BaseString& s) //ïåðåãðóçêà îïåðàòîðà =
+	BaseString& operator=(BaseString& s) //перегрузка оператора =
 	{
 		
 		if (this != &s)
@@ -118,7 +118,7 @@ public:
 		}
 	}
 	
-	BaseString(BaseString& s)//êîíñòðóêòîð êîïèðîâàíèÿ 
+	BaseString(BaseString& s)//конструктор копирования 
 	{
 		
 			len = s.Length();
@@ -139,7 +139,7 @@ public:
 			p[len] = '\0';
 	}
 	
-	virtual void print() //âèðòóàëüíàÿ ôóíêöèÿ âûâîäà
+	virtual void print() //виртуальная функция вывода
 	{
 		int i = 0;
 
@@ -158,11 +158,11 @@ class String : public BaseString
 {
 public:
 
-	using BaseString::BaseString; //ñ++ 11 - ýòî 1000 è 1 îòñóòñòâóþùèé êîíñòðóêòîð :)
+	using BaseString::BaseString; //с++ 11 - это 1000 и 1 отсутствующий конструктор :)
 
 	String& operator+(String& s)
 	{
-		int s_len = this->len + s.Length() - 1; //äëèíà äâóõ ñòðîê + 1 ìåñòî ïîä '\0'
+		int s_len = this->len + s.Length() - 1; //длина двух строк + 1 место под '\0'
 		cout << "len = " << len;
 		cout << "\t S_len = " << s_len << endl;
 
@@ -205,7 +205,7 @@ public:
 
 		if (fl && j == str.Length())
 		{
-			cout << "Èíäåêñ ïîäñòðîêè = ";
+			cout << "Индекс подстроки = ";
 			return index;
 		}
 		else
@@ -217,7 +217,7 @@ public:
 };
 
 
-int _tmain(int argc, _TCHAR* argv[]) //áåç #include <tchar.h> ðàáîòàòü íå áóäåò... 
+int _tmain(int argc, _TCHAR* argv[]) //без #include <tchar.h> работать не будет... 
 {
 	setlocale(LC_ALL, "Ru-ru");
 

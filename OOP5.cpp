@@ -8,6 +8,21 @@
 using namespace std;
 
 
+/*
+1 Унаследуйте класс от базового класса Многомерный массив. Убедитесь что в родительском классе верно выделяется и освобождается память под многомерный массив. В производном
+классе напишите метод заполнения массива произвольным нетривиальным образом. Введите метод, который решает задачу, указанную в варианте, и возвращает из неё результат (входная
+матрица остаётся неизменной, на выходе должен быть новый массив или число).
+2 Введите систему исключений, указанную на рисунке 1 Встройте собственный тип исключения, которое может возникнуть при
+решении задачи из Вашего варианта, в общую структуру наследования. Продемонстрируйте обработку исключений с
+помощью операторов try – throw – catch (исключения генерируются в методах класса Матрица, обрабатываются – в main).
+3 Сохраните результат обработки нескольких матриц в файл, извлеките результаты из файла, выведите их в консоль. Продемонстрируйте, что
+результаты, которые записывались в файл, и прочитанные из файла данные не отличаются.
+4 Введите конструкторы и методы для чтения матрицы произвольного размера из файла.
+5 Преобразуйте классы многомерных массивов к шаблонам классов.
+
+Получить вектор, в котором содержатся максимальные элементы из каждой строки матрицы. -> .Max_Vector()
+*/
+
 //------------------Наследование класса ошибок-------------------//
 /*
 				std::exception
@@ -28,6 +43,7 @@ using namespace std;
 						    WrongSizeException
 */
 //-------------------------------------------------------------//
+
 
 
 class Exception : public exception
@@ -63,7 +79,7 @@ class IndexOutOfBoundsException : public Exception
 protected:
 	int row, columns;
 public:
-	IndexOutOfBoundsException(string& str, int& r, int& clmn) : Exception(str)
+	IndexOutOfBoundsException(string str, int& r, int& clmn) : Exception(str)
 	{
 		row = r;
 		columns = clmn;
@@ -81,7 +97,7 @@ class WrongDimensionsException : public Exception
 protected:
 	int r_1, c_1, r_2, c_2;
 public:
-	WrongDimensionsException(string& str, int r1, int c1, int r2, int c2) : Exception(str), r_1(r1), r_2(r2), c_1(c1),c_2(c2) {}
+	WrongDimensionsException(string str, int r1, int c1, int r2, int c2) : Exception(str), r_1(r1), r_2(r2), c_1(c1),c_2(c2) {}
 
 	virtual void print() const
 	{
@@ -95,7 +111,7 @@ class WrongSizeException : public Exception
 protected:
 	int rw, cl;
 public:
-	WrongSizeException(string& str, int r, int c) : Exception(str), rw(r), cl(c) { }
+	WrongSizeException(string str, int r, int c) : Exception(str), rw(r), cl(c) { }
 
 	virtual void print() const
 	{
@@ -108,7 +124,7 @@ class IncorrectDataInMatrix : public Exception
 private:
 	int r, c;
 public:
-	IncorrectDataInMatrix(string& str, int rw, int cl) : Exception(str), r(rw), c(cl) {}
+	IncorrectDataInMatrix(string str, int rw, int cl) : Exception(str), r(rw), c(cl) {}
 
 	virtual void print() const
 	{
@@ -125,10 +141,9 @@ protected:
 public:
 	BaseMatrix(int r = 2, int cl = 2) : row(r), columns(cl)
 	{
-		if (r <= 0 || cl <= 0)
+		if (row <= 0 || columns <= 0)
 		{
-			//throw WrongSizeException("Ошибка в размерах матрицы", row, columns);
-			cout << "Err";
+			throw WrongSizeException("Ошибка в размерах матрицы", row, columns);
 		}
 
 		//создание массива
@@ -145,11 +160,12 @@ public:
 		row = matrix.row;
 		columns = matrix.columns;
 
-		arr = new temp * [row];
+
+		arr = new temp* [row];
 
 		for (int i = 0; i < row; ++i)
 		{
-			arr[row] = new temp[columns];
+			arr[i] = new temp[columns];
 		}
 
 		for (int i = 0; i < row ; ++i)
@@ -161,7 +177,7 @@ public:
 		}
 	}
 
-	~BaseMatrix()
+	virtual ~BaseMatrix()
 	{
 		if (arr != nullptr) 
 		{
@@ -186,12 +202,45 @@ public:
 		}
 	}
 
+	BaseMatrix& operator=(const BaseMatrix& mtr)
+	{
+		if (this != &mtr)
+		{
+			if (arr != nullptr)
+			{
+				for (int i = 0; i < row; ++i)
+					delete[] arr[i];
+				delete[] arr;
+			}
+
+			row = mtr.row;
+			columns = mtr.columns;
+
+			arr = new temp * [row];
+			for (int i = 0; i < row; i++)
+			{
+				arr[i] = new temp[columns];
+			}
+
+			for (int i = 0; i < row; i++)
+			{
+				for (int j = 0; j < columns; j++)
+				{
+					arr[i][j] = mtr.arr[i][j];
+				}
+			}
+		}
+		else
+		{
+			return *this;
+		}
+	}
+
 	virtual temp& operator()(int rw, int cln) const
 	{
 		if (rw < 0 || cln < 0 || rw > row || cln > columns)
 		{
-			//throw IndexOutOfBoundsException("Ошибка в обращении по индексу -> ", rw, cln);
-			cout << "err";
+			throw IndexOutOfBoundsException("Ошибка в обращении по индексу -> ", rw, cln);
 		}
 		return arr[rw][cln];
 	}
@@ -258,7 +307,7 @@ public:
 			
 			in >> row >> columns;
 			
-			if (row == matrix.height && columns == matrix.columns)
+			if (row == matrix.row && columns == matrix.columns)
 			{
 				for (int i = 0; i < matrix.row; i++)
 				{
@@ -357,36 +406,34 @@ public:
 		}
 	}
 
-	template<typename T1>
 	Matrix<T1> Max_Vector()
 	{
-		T1* temp = new T1[this->row]; //массив макс значений из каждой строки матрицы
+		T1* tmp = new T1[this->row]; //массив макс значений из каждой строки матрицы
 
 		for (int i = 0; i < this->row; ++i)
 		{
-			for (int j = 0; j < this->columns-1; ++j)
+			tmp[i] = this->arr[i][0];
+		}
+
+		for (int i = 0; i < this->row; ++i)
+		{
+			for (int j = 0; j < this->columns; j++)
 			{
-				if (this->arr[i][j] <= this->arr[i][j + 1])
+				if (tmp[i] <= this->arr[i][j])
 				{
-					temp[i] = this->arr[i][j + 1]; //заполняем массив
+					tmp[i] = this->arr[i][j]; //заполняем массив
 				}
 			}
 		}
-
-		for (int i = 0; i < this->row; ++i)
-		{
-			delete[] this->arr[i]; //очищаем матрицу
-		}
-		delete[] this->arr;
 
 		Matrix<T1> answer(this->row, 1); //матрица ответа
 
 		for (int i = 0; i < answer.row; ++i)
 		{ 
-			answer[i][0] = temp[i]; //заполняем матрицу ответа
+			answer.arr[i][0] = tmp[i]; //заполняем матрицу ответа
 		}
 
-		delete[] temp; //очищаем массив макс значений
+		delete[] tmp; //очищаем массив макс значений
 
 		return answer;
 	}
@@ -397,7 +444,7 @@ public:
 		{
 			for (int j = 0; j < this->columns;++j)
 			{
-				this->arr[i][j] = (T1)((rand()% 100) - 69 );
+				this->arr[i][j] = (T1)((rand()% 100));
 			}
 		}
 	}
@@ -420,13 +467,59 @@ int main()
 {
 	setlocale(LC_ALL, "Ru-ru");
 
-	Matrix<int> answ(3,3);
+	ofstream out("test.txt");
+
+	Matrix<int> answ(3, 1);
 	Matrix<int> m1(3, 3);
 	m1.RandomNums();
 
 	m1.print();
 
 	answ = m1.Max_Vector();
+
+	if (out.is_open())
+	{
+		out << answ;
+		out.close();
+	}
+
+	ifstream in("test.txt");
+
+	Matrix<int> txt(in);
+	in.close();
+
+	answ.print();
+
+	cout << '\n';
+
+	txt.print();
+
+	try
+	{
+		Matrix<int>	m1(-5, 0);
+	}
+	catch (WrongSizeException gg)
+	{
+		gg.print();
+	}
+	catch (...)
+	{
+		cout << "\nSupFast Bug\a\n";
+	}
+
+	try
+	{
+		answ(1, 5);
+	}
+	catch (IndexOutOfBoundsException gg)
+	{
+		gg.what();
+	}
+	catch (...)
+	{
+		cout << "\nSupFast Bug\a\n";
+	}
+
 
 	return 0;
 }

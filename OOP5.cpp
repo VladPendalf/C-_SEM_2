@@ -467,7 +467,7 @@ int main()
 {
 	setlocale(LC_ALL, "Ru-ru");
 
-	ofstream out("test.txt");
+	ofstream out("test_OOP5.txt");
 
 	Matrix<int> answ(3, 1);
 	Matrix<int> m1(3, 3);
@@ -483,7 +483,7 @@ int main()
 		out.close();
 	}
 
-	ifstream in("test.txt");
+	ifstream in("test_OOP5.txt");
 
 	Matrix<int> txt(in);
 	in.close();

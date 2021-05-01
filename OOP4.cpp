@@ -2,7 +2,14 @@
 #include <tchar.h>
 
 using namespace std;
+/*
+Унаследуйте свой класс от базового класса «Строка». Реализуйте работу функций:
+конструкторов, конструктора копий, деструктора, operator=, как в базовом классе, так и в
+наследнике. Добавьте в наследник работу функции, указанной в варианте.
 
+Написать функцию поиска IndexOf() первого вхождения произвольной
+подстроки в строке.
+*/
 class BaseString
 {
 protected:
@@ -92,11 +99,8 @@ public:
 		
 		if (this != &s)
 		{
-			if (capacity >= s.Capacity())
-			{
-				len = s.Length();
-				capacity = s.Capacity();
-			}
+			capacity = s.Capacity();
+			len = s.Length();
 
 			if (p != nullptr)
 			{
@@ -160,30 +164,10 @@ public:
 
 	using BaseString::BaseString; //с++ 11 - это 1000 и 1 отсутствующий конструктор :)
 
-	String& operator+(String& s)
-	{
-		int s_len = this->len + s.Length() - 1; //длина двух строк + 1 место под '\0'
-		cout << "len = " << len;
-		cout << "\t S_len = " << s_len << endl;
-
-		for (int i = len, j = 0; (i < s_len && s[j] != '\0') ; ++i, ++j)
-		{
-			p[i] = s[j];
-			cout << "\n" << p[i] << '=' << s[j] << endl;
-		}
-
-		p[s_len] = '\0';
-		
-		len = s_len;
-		
-		return *this;
-	}
-
 	int IndexOf(String& str)
 	{
 		bool fl = false;
 		int i = 0, j = 0, index;
-
 
 		while (j < str.Length() && i < len)
 		{

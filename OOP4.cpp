@@ -44,9 +44,9 @@ public:
 		p[len] = '\0';
 	}
 
-	BaseString(const char* ptr)
+	BaseString(const char* ptr, int len)
 	{
-
+		capacity = 2 * len;
 		p = new char[capacity];
 		
 		p[len] = '\0';
@@ -96,25 +96,29 @@ public:
 	
 	BaseString& operator=(BaseString& s) //перегрузка оператора =
 	{
-		
+
 		if (this != &s)
 		{
-			capacity = s.Capacity();
-			len = s.Length();
+			BaseString gg;
 
-			if (p != nullptr)
+			gg.capacity = s.Capacity();
+			gg.len = s.Length();
+
+			if (gg.p != nullptr)
 			{
-				delete[] p;
+				delete[] gg.p;
 			}
 
-			p = new char[capacity];
+			gg.p = new char[capacity];
 
 			for (int i = 0; i < len; i++)
 			{
-				p[i] = s.p[i];
+				gg.p[i] = s.p[i];
 			}
 
-			p[len] = '\0';
+			gg.p[len] = '\0';
+			
+			return gg;
 		}
 		else
 		{
@@ -127,11 +131,6 @@ public:
 		
 			len = s.Length();
 			capacity = s.Capacity();
-
-			if (p != nullptr)
-			{
-				delete[] p;
-			}
 
 			p = new char[capacity];
 

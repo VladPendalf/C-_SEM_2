@@ -99,19 +99,11 @@ public:
 
 		if (this != &s)
 		{
-			BaseString gg;
+			BaseString gg(s.Capacity());
 
-			gg.capacity = s.Capacity();
 			gg.len = s.Length();
 
-			if (gg.p != nullptr)
-			{
-				delete[] gg.p;
-			}
-
-			gg.p = new char[capacity];
-
-			for (int i = 0; i < len; i++)
+			for (int i = 0; i < gg.len; i++)
 			{
 				gg.p[i] = s.p[i];
 			}

@@ -94,7 +94,7 @@ public:
 		return p[i];
 	} 
 	
-	BaseString& operator=(BaseString& s) //перегрузка оператора =
+	BaseString& operator=(const BaseString& s) //перегрузка оператора =
 	{
 
 		if (this != &s)

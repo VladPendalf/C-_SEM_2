@@ -99,23 +99,18 @@ public:
 
 		if (this != &s)
 		{
-			BaseString gg(s.Capacity());
+			capacity = s.Capacity();
 
-			gg.len = s.Length();
+			len = s.Length();
 
-			for (int i = 0; i < gg.len; i++)
+			for (int i = 0; i < len; i++)
 			{
-				gg.p[i] = s.p[i];
+				p[i] = s.p[i];
 			}
 
-			gg.p[len] = '\0';
-			
-			return gg;
+			p[len] = '\0';
 		}
-		else
-		{
 			return *this;
-		}
 	}
 	
 	BaseString(BaseString& s)//конструктор копирования 

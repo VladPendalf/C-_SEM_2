@@ -112,7 +112,7 @@ public:
 	Human(const Human& hmn) : 
 		Surname(hmn.Surname), name(hmn.name), sex(hmn.sex), height(hmn.height), weight(hmn.weight), data(hmn.data), telephone(hmn.telephone), adres(hmn.adres) {}
 
-	Human& operator=(Human& hmn)
+	Human& operator=(const Human& hmn)
 	{
 		if (this != &hmn)
 		{
@@ -125,10 +125,7 @@ public:
 			telephone = hmn.telephone;
 			adres = hmn.adres;
 		}
-		else
-		{
 			return *this;
-		}
 	}
 
 

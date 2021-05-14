@@ -113,7 +113,7 @@ public:
 			return *this;
 	}
 	
-	BaseString(BaseString& s)//конструктор копирования 
+	BaseString(const BaseString& s)//конструктор копирования 
 	{
 		
 			len = s.Length();

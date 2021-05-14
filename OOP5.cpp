@@ -230,10 +230,7 @@ public:
 				}
 			}
 		}
-		else
-		{
 			return *this;
-		}
 	}
 
 	virtual temp& operator()(int rw, int cln) const

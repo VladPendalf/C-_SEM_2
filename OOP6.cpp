@@ -112,7 +112,7 @@ public:
 	Human(const Human& hmn) : 
 		Surname(hmn.Surname), name(hmn.name), sex(hmn.sex), height(hmn.height), weight(hmn.weight), data(hmn.data), telephone(hmn.telephone), adres(hmn.adres) {}
 
-	Human& operator=(const Human& hmn)
+	Human& operator=(Human& hmn)
 	{
 		if (this != &hmn)
 		{
@@ -125,7 +125,10 @@ public:
 			telephone = hmn.telephone;
 			adres = hmn.adres;
 		}
+		else
+		{
 			return *this;
+		}
 	}
 
 
@@ -485,6 +488,30 @@ public:
 		}
 	}
 
+	template<typename T2>
+	void load(ifstream& fin) 
+	{
+		while (!this->isEmpty()) 
+		{
+			Element<T>* ptr = this->pop();
+			delete ptr;
+		}
+
+		int vle = 0;
+		string str;
+		
+		getline(fin, str); //считываем всю строку , т.к. getline() нормально обрабатывает пробелы
+		std::istringstream foo(str); foo >> vle;
+		
+		for (int i = 0; i < vle; ++i) 
+		{
+			T2 current;
+			fin >> current;
+			this->push(current);
+		}
+
+	}
+
 	void print() 
 	{
 		while (!this->isEmpty()) 
@@ -593,13 +620,30 @@ int main()
 
 		ofstream fout("text.txt");
 
-		if (fout.is_open()) {
+		if (fout.is_open()) 
+		{
 			inf.save(fout);
 			fout.close();
 		}
-		else {
+		else 
+		{
 			std::cout << "file not opened\n";
 		}
+
+		ifstream fin("text.txt");
+
+		if (fin.is_open()) 
+		{
+			of.load(fin);
+			fin.close();
+		}
+		else 
+		{
+			std::cout << "file not opened\n";
+		}
+
+		of.print();
+
 	}
 	catch (...)
 	{

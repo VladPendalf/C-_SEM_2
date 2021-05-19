@@ -36,7 +36,25 @@ public:
 			
 		}
 	}
+ BaseString(char* ptr, int len) //Kонструктор
+	{
+                capacity = len*2;
+		p = new char[capacity];
+		
+		p[len] = '\0';
+		
+		if (ptr != nullptr) //проверка на ненулевую строку
+		{
+			while (ptr[len] != '\0' && len < (capacity - 1)) //копируем данные в новый массив
+			{
+				p[len] = ptr[len];
+				++len;
+			}
 
+			p[len] = '\0'; //отделяем 
+			
+		}
+	}
 	BaseString()
 	{
 		p = new char[capacity];
@@ -102,7 +120,10 @@ public:
 			capacity = s.Capacity();
 
 			len = s.Length();
+                        if(p != nullptr)
+                            delete[] p;
 
+                         p=new char[Capacity()];
 			for (int i = 0; i < len; i++)
 			{
 				p[i] = s.p[i];

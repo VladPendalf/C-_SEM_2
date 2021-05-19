@@ -517,7 +517,6 @@ public:
 		}
 	}
 
-	template<typename T2>
 	void load(ifstream& fin)
 	{
 		while (!this->isEmpty())
@@ -534,7 +533,7 @@ public:
 
 		for (int i = 0; i < vle; ++i)
 		{
-			T2 current;
+			T current;
 			fin >> current;
 			this->push(current);
 		}
@@ -569,7 +568,8 @@ public:
 	}
 };
 
-bool surname_search(const Human& hmn, const string str = "") {
+bool surname_search(const Human& hmn, const string str = "") 
+{
 	if (hmn.Surname == str)
 	{
 		return 1;

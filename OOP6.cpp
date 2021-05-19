@@ -670,7 +670,7 @@ int main()
 		if (fin.is_open())
 		{
 			of.load(fin);
-			of.close();
+			fin.close();
 		}
 		else
 		{

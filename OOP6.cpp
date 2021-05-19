@@ -636,13 +636,14 @@ int main()
 		{
 			of.load(fin);
 			fin.close();
+			of.print();
 		}
 		else 
 		{
 			std::cout << "file not opened\n";
 		}
 
-		of.print();
+		
 
 	}
 	catch (...)

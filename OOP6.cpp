@@ -664,6 +664,20 @@ int main()
 		{
 			std::cout << "file not opened\n";
 		}
+		
+		ifstream fin("text.txt");
+		
+		if (fin.is_open())
+		{
+			of.load(fix);
+			of.close();
+		}
+		else
+		{
+			std::cout << "file not opened\n";
+		}
+		
+		of.print();
 	}
 	catch (...)
 	{

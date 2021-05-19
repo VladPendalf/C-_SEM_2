@@ -172,6 +172,12 @@ public:
 		fout << el.info;
 		return fout;
 	}
+
+	friend istream& operator>>(istream& fout, Element<T>& el)
+	{
+		fout << el.info;
+		return fout;
+	}
 };
 
 template<class T>
@@ -658,22 +664,6 @@ int main()
 		{
 			std::cout << "file not opened\n";
 		}
-
-		ifstream fin("text.txt");
-
-		if (fin.is_open())
-		{
-			of.load(fin);
-			fin.close();
-			of.print();
-		}
-		else
-		{
-			std::cout << "file not opened\n";
-		}
-
-
-
 	}
 	catch (...)
 	{

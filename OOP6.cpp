@@ -62,7 +62,7 @@ struct date
 	date(int d, int m, int y) : day(d), mounth(m), years(y) {}
 };
 
-std::ostream& operator>>(std::ostream& s, const date& hz)
+std::istream& operator>>(std::istream& s, date& hz)
 {
 	return s >> hz.day >> hz.mounth >> hz.years;
 }
@@ -129,9 +129,9 @@ public:
 		return s;
 	}
 
-	friend ostream& operator>>(ostream& s, const Human& hmn)
+	friend istream& operator>>(istream& s, Human& hmn)
 	{
-		s >> hmn.Surname >> "." >> hmn.name >> "." >> hmn.sex >> "." >> hmn.height >> "." >> hmn.weight >> "." >> hmn.data >> "." >> hmn.telephone >> "." >> hmn.adres;
+		s >> hmn.Surname >> hmn.name >> hmn.sex >> hmn.height >> hmn.weight >> hmn.data >> hmn.telephone >> hmn.adres;
 		return s;
 	}
 
@@ -664,9 +664,9 @@ int main()
 		{
 			std::cout << "file not opened\n";
 		}
-		
+
 		ifstream fin("text.txt");
-		
+
 		if (fin.is_open())
 		{
 			of.load(fin);
@@ -676,7 +676,7 @@ int main()
 		{
 			std::cout << "file not opened\n";
 		}
-		
+
 		of.print();
 	}
 	catch (...)
